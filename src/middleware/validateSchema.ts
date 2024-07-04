@@ -3,6 +3,7 @@ import { Schema } from 'zod';
 
 const validate = (schema: Schema) => (req: IReq, res: IRes, next:NextFunction) => {
     try {
+        
         schema.parse({
             body: req.body,
             query: req.query,
@@ -13,3 +14,5 @@ const validate = (schema: Schema) => (req: IReq, res: IRes, next:NextFunction) =
         return res.status(400).send(err)
     }
 }
+
+export default validate;
