@@ -6,6 +6,7 @@ import { db } from "./database";
 const app = express();
 
 app.use(express.json());
+dotenv.config()
 
 db()
 app.use('/', router);
