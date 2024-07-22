@@ -2,14 +2,21 @@ import express from "express";
 import dotenv from "dotenv";
 import router from "./routes";
 import { db } from "./database";
+const cors = require('cors');
+
 
 const app = express();
 
+
+dotenv.config()
+const PORT = process.env.PORT;
+
+app.use(cors())
 app.use(express.json());
 dotenv.config()
 
 db()
 app.use('/', router);
-app.listen(3000, () => {
-    console.log("server runing on port 3000");
+app.listen(PORT, () => {
+    console.log(`SERIDOR ACTIVO EN EL PUERTO ${PORT}`);
 })
