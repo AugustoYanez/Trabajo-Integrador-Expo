@@ -1,10 +1,11 @@
 import { z } from 'zod'
+import { Documento, Notificacion } from '../interfaces/enums'
 
 export const loginSchema = z.object({
     body: z.object({
-        nombre: z.string({
+        email: z.string({
             required_error: "El campo nombre, es requerido.",
-        }).min(4, {message: "Tiene que tener mas de 4 caracteres."}),
+        }).email({message: "emailno valido"}),
         contraseña: z.string().min(8, { message: "Tiene que tener mas de 8 caracteres." }),
     })
 })
@@ -14,7 +15,29 @@ export const registerSchema = z.object({
         nombre: z.string({
             required_error: "El campo nombre, es requerido.",
         }).min(4, {message: "Tiene que tener mas de 4 caracteres."}),
+
+        apellido: z.string({
+            required_error: "El campo apellido, es requerido.",
+        }).min(4, {message: "Tiene que tener mas de 4 caracteres."}),
+
         email: z.string().email({ message: "Ingrese un email valido." }),
+
         contraseña: z.string().min(8, { message: "Tiene que tener mas de 8 caracteres." }),
+
+        nroDocumento: z.string({
+            required_error: "El campo numero de documento, es requerido.",
+        }),
+
+        telefono: z.string({
+            required_error: "El campo telefono, es requerido.",
+        }).min(8, {message: "Tiene que tener mas de 8 caracteres."}),
+
+        documento: z.nativeEnum(Documento, {
+            required_error:"El campo documento, es requerido"
+        }),
+
+        notificacion: z.nativeEnum(Notificacion, {
+            required_error: "El campo notificacion, es requerido"
+        }),
     })
 })
