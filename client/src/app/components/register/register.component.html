@@ -1,1 +1,50 @@
-<p>register works!</p>
+<div class="flex items-center justify-center min-h-screen bg-gray-900">  
+    <form class="bg-gray-800 p-8 rounded-lg shadow-lg w-96">  
+      <h2 class="text-white text-2xl font-bold mb-6 text-center">REGISTRO</h2>  
+      
+      <div class="mb-4">  
+        <label class="block text-gray-300 mb-2" for="nombre">Ingrese su nombre</label>  
+        <input class="w-full p-2 bg-gray-700 text-white rounded focus:outline-none focus:ring-2 focus:ring-blue-500" type="text" id="nombre" placeholder="Nombre">  
+      </div>  
+  
+      <div class="mb-4">  
+        <label class="block text-gray-300 mb-2" for="apellido">Ingrese su apellido</label>  
+        <input class="w-full p-2 bg-gray-700 text-white rounded focus:outline-none focus:ring-2 focus:ring-blue-500" type="text" id="apellido" placeholder="Apellido">  
+      </div>  
+  
+      <div class="mb-4">  
+        <label class="block text-gray-300 mb-2" for="email">Ingrese su email</label>  
+        <input class="w-full p-2 bg-gray-700 text-white rounded focus:outline-none focus:ring-2 focus:ring-blue-500" type="email" id="email" placeholder="Email">  
+      </div>  
+  
+      <div class="mb-4">  
+        <label class="block text-gray-300 mb-2" for="contrasena">Ingrese su contraseña</label>  
+        <input class="w-full p-2 bg-gray-700 text-white rounded focus:outline-none focus:ring-2 focus:ring-blue-500" type="password" id="contrasena" placeholder="Contraseña">  
+      </div>  
+  
+      <div class="mb-4">  
+        <label class="block text-gray-300 mb-2" for="telefono">Ingrese su teléfono</label>  
+        <input class="w-full p-2 bg-gray-700 text-white rounded focus:outline-none focus:ring-2 focus:ring-blue-500" type="tel" id="telefono" placeholder="Teléfono">  
+      </div>  
+  
+      <div class="mb-4">  
+        <label class="block text-gray-300 mb-2" for="rol">Ingrese su tipo documento</label>  
+        <select class="w-full p-2 bg-gray-700 text-white rounded focus:outline-none focus:ring-2 focus:ring-blue-500" id="rol">  
+          <option *ngFor="let doc of getEnumValues(enumDoc)" [value]="doc">{{doc}}</option>  
+        </select>  
+      </div> 
+
+      <div class="">
+        <input class="w-full p-2 bg-gray-700 text-white rounded focus:outline-none focus:ring-2 focus:ring-blue-500" type="num" id="numero" placeholder="Numero">  
+      </div>
+  
+       <div class="mb-4">  
+        <label class="block text-gray-300 mb-2" for="rol">Ingrese su tipo de Contacto</label>  
+        <select class="w-full p-2 bg-gray-700 text-white rounded focus:outline-none focus:ring-2 focus:ring-blue-500" id="rol">  
+          <option *ngFor="let con of getEnumValues(enumCon)" [value]="con">{{con}}</option>  
+        </select>  
+      </div>  
+  
+      <button class="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 rounded" type="submit">Registrar</button>  
+    </form>  
+  </div>  
