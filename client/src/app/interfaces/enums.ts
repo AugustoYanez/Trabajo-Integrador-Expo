@@ -11,5 +11,6 @@ export enum Contacto {
 }
 
 export enum Rol {
-    Administrador = "ADMINISTRADOR"
+    Administrador = "ADMINISTRADOR",
+    Usuario = "USUARIO"
 }

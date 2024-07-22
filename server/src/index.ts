@@ -18,7 +18,6 @@ dotenv.config()
 
 db()
 app.use('/', router);
-console.log(Object.values(Documento));
 app.listen(PORT, () => {
     console.log(`SERIDOR ACTIVO EN EL PUERTO ${PORT}`);
 })

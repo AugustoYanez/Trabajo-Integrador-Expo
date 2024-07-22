@@ -4,7 +4,7 @@ export enum Documento {
     Pasaporte = "PASAPORTE",
 }
 
-export enum Notificacion {
+export enum Contacto {
     Whatsapp = "WHATSAPP",
     Sms = "SMS",
     Email = "EMAIL",
