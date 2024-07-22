@@ -1,13 +1,13 @@
-import { Documento, Notificacion, Rol } from "./enums"
+import { Documento, Contacto, Rol } from "./enums"
 
 export interface IUsuario {
     nombre: string;
     apellido: string
     email: string;
-    contraseña: string;
+    contrasena: string;
     nroDocumento: string;
     telefono: string;
     documento: Documento;
-    notificacion: Notificacion;
+    contacto: Contacto;
     rol: Rol; 
 }

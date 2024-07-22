@@ -5,12 +5,12 @@ import { Request as IReq, Response as IRes } from 'express';
 import { createAccesToken } from "../libs/jwt";
 
 export const login = async (req: IReq, res: IRes) => {
-    const {email, contraseña}: IUsuario = req.body;
+    const {email, contrasena}: IUsuario = req.body;
 
     const found = await Usuario.findOne({email});
     if (!found) return res.status(400).json(["No se encontro al usuario. "]); 
 
-    const match = await bcrypt.compare(contraseña, found.contraseña)
+    const match = await bcrypt.compare(contrasena, found.contrasena)
     if(!match) return res.status(500).json(["Contraseña incorrecta. "]);
     
     const token = await createAccesToken({_id: found._id, nombre: found.nombre, email: found.email});
@@ -19,15 +19,15 @@ export const login = async (req: IReq, res: IRes) => {
 }
 
 export const register = async (req: IReq, res: IRes) => {
-    const {nombre, apellido, documento, notificacion, nroDocumento, telefono, email, contraseña}: IUsuario = req.body;
+    const {nombre, apellido, documento, contacto, nroDocumento, telefono, email, contrasena}: IUsuario = req.body;
 
     const found = await Usuario.findOne({email});
 
-    if (found) return res.status(400).json(["El nombre o email ya esta en uso."]);
+    if (found) return res.status(400).json(["email ya esta en uso."]);
 
-    const hash = await bcrypt.hash(contraseña, 10);
+    const hash = await bcrypt.hash(contrasena, 10);
 
-    const log = await new Usuario({nombre, apellido, documento, notificacion, nroDocumento, telefono, email, contraseña:hash}).save();
+    const log = await new Usuario({nombre, apellido, documento, contacto, nroDocumento, telefono, email, contrasena:hash}).save();
     
     const token = await createAccesToken({_id: log._id,  email: log.email});
     

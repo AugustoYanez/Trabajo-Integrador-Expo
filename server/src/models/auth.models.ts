@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { Documento, Notificacion, Rol } from "../interfaces/enums";
+import { Documento, Contacto, Rol } from "../interfaces/enums";
 
 const usuario = new mongoose.Schema({
     nombre: {
@@ -19,7 +19,7 @@ const usuario = new mongoose.Schema({
         lowercase: true,
         trim: true
     },
-    contraseña: {
+    contrasena: {
         type: String,
         required: true,
         minlength: 8,
@@ -40,9 +40,9 @@ const usuario = new mongoose.Schema({
         eunm: Object.values(Documento),
         required: true,
     },
-    notificacion: {
+    contacto: {
         type: String,
-        eunm: Object.values(Notificacion),
+        eunm: Object.values(Contacto),
         required: true,
     },
     rol: {

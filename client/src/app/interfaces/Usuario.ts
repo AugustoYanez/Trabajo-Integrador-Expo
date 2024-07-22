@@ -4,7 +4,7 @@ export interface IUsuario {
     nombre: string;
     apellido: string
     email: string;
-    contrasenia: string;
+    contrasena: string;
     nroDocumento: string;
     telefono: string;
     documento: Documento;
