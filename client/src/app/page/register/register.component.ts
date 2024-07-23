@@ -43,7 +43,7 @@ export class RegisterComponent {
   validarCampos(): string[] {
     const errores: string[] = [];
     if (!this.usuario.nombre || !this.usuario.apellido || !this.usuario.email || !this.usuario.contrasena || !this.usuario.nroDocumento || !this.usuario.telefono){
-      errores.push("campos vacios")
+      errores.push("Los campos estan vacios. ")
     }
     return errores;
   }

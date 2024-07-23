@@ -23,7 +23,7 @@ export const register = async (req: IReq, res: IRes) => {
 
     const found = await Usuario.findOne({email});
 
-    if (found) return res.status(400).json(["email ya esta en uso."]);
+    if (found) return res.status(400).json(["El e-mail ya esta en uso."]);
 
     const hash = await bcrypt.hash(contrasena, 10);
 
@@ -32,4 +32,5 @@ export const register = async (req: IReq, res: IRes) => {
     const token = await createAccesToken({_id: log._id,  email: log.email});
     
     res.status(201).json({ message: 'Registro correcto. ', token });
+    
 }

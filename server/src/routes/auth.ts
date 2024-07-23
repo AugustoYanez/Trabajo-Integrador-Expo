@@ -6,6 +6,13 @@ import { loginSchema, registerSchema } from '../schema/auth.schema'
 
 const auth = Router()
 
+
+
+auth.get('/perfil', (req, res) => {
+    console.log("oer")
+});
+
+
 auth.post('/login', validate(loginSchema), login)
 auth.post('/register', validate(registerSchema), register)
 
