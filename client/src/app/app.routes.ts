@@ -4,7 +4,7 @@ import { RegisterComponent } from './page/register/register.component';
 import { LoginComponent } from './page/login/login.component';
 import { HomeComponent } from './page/home/home.component';
 import { PerfilComponent } from './page/perfil/perfil.component';
-import { AdoptarComponent } from './components/adoptar/adoptar.component';
+import { AdoptarComponent } from './page/adoptar/adoptar.component';
 import { AuthGuard } from './auth.guard';
 
 export const routes: Routes = [
