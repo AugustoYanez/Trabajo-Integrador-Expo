@@ -57,8 +57,11 @@ constructor(private Router: Router) {
         this.mensajeExito = res.message;
         this.mensajeError = null;
         localStorage.setItem('token', res.token);
-        this.Router.navigate(['/perfil']);
-      },
+        if (res.admin) {
+          localStorage.setItem('admin', res.admin);
+        }
+        this.Router.navigate(['/']);
+      },      
       error: (err) => {
         this.mensajeExito = null;
         this.mensajeError = err.error;

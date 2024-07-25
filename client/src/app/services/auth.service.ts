@@ -1,16 +1,16 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { IUsuario } from '../interfaces/Usuario';
 import { Router } from '@angular/router';
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-
   private URL = 'http://localhost:3000/api';
 
-  constructor(private http: HttpClient, private router: Router) { }
+  constructor(private http: HttpClient, private router: Router) { 
+  }
 
   register(user: IUsuario): Observable<any> {
     return this.http.post<IUsuario>(`${this.URL}`+ '/register', user);
@@ -27,6 +27,13 @@ export class AuthService {
     return null;
   }
 
+  isAdmin(): string | null {
+    if (typeof window !== 'undefined' && window.localStorage) {
+      return localStorage.getItem('admin');
+    }
+    return null;
+  }
+
   loggedIn(): boolean {
     if (typeof window !== 'undefined' && window.localStorage) {
       return !!localStorage.getItem('token');
@@ -36,7 +43,8 @@ export class AuthService {
 
   logout(){
     localStorage.removeItem('token');
-    this.router.navigate(['/login']);
+    localStorage.removeItem('admin');
+    this.router.navigate(['/']);
   }
 
 
