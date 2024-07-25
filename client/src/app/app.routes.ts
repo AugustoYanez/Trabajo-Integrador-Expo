@@ -6,10 +6,12 @@ import { HomeComponent } from './page/home/home.component';
 import { PerfilComponent } from './components/perfil/perfil.component';
 import { AdoptarComponent } from './components/adoptar/adoptar.component';
 import { AuthGuard } from './auth.guard';
+import { AdopcionComponent } from './components/adopcion/adopcion.component';
 export const routes: Routes = [
     { path: '', component: HomeComponent },
     { path: 'register', component: RegisterComponent },
     { path: 'login', component: LoginComponent },
     { path: 'perfil', component: PerfilComponent, canActivate: [AuthGuard] },
     { path: 'adoptar', component: AdoptarComponent },
+    { path: 'adopcion', component: AdopcionComponent },
   ];

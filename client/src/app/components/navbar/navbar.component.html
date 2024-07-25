@@ -2,12 +2,11 @@
     <div class="container mx-auto flex justify-between items-center">
         <a  class="text-white text-xl font-extrabold"  routerLink="/">MASCOTAP</a>
         <div class="hidden md:flex space-x-6">
-            <a href="/" class="nav-link text-white hover:underline">Inicio</a>
-            <a href="/adoptar" class="nav-link text-white hover:underline">Adoptar</a>
-            <a href="/registrar" class="nav-link text-white hover:underline">Registrar Mascota</a>
-            <a href="/encontrar" class="nav-link text-white hover:underline">Encontrar Mascota</a>
-            <a href="/transito" class="nav-link text-white hover:underline">Hogares de Tránsito</a>
-            <a href="/contacto" class="nav-link text-white hover:underline">Contactar</a>
+            <a href="/" class="nav-link text-white hover:underline" routerLink="/adopcion" >Dar en adopcion</a>
+            <a class="nav-link text-white hover:underline" >Quiero Adoptar</a>
+            <a  class="nav-link text-white hover:underline">Registrar Mascota</a>
+            <a  class="nav-link text-white hover:underline">Hogares de Tránsito</a>
+            <a  class="nav-link text-white hover:underline">Sobre Nosotros</a>
             <a  class="nav-link text-white hover:underline" routerLink="/perfil" >Perfil</a>
         </div>
         <ng-container *ngIf = "!auth.loggedIn(); else loggedIn">

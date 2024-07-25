@@ -13,3 +13,10 @@ export enum Contacto {
 export enum Rol {
     Administrador = "ADMINISTRADOR"
 }
+ 
+export enum Estado{ // para las mascotas
+    Adoptada = "ADOPTADA",
+    Transito = "TRANSITO",
+    Disponible = "DISPONIBLE",
+    Perdida = "PERDIDA",
+}
