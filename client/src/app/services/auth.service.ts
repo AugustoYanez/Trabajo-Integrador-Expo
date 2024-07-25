@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
 })
 export class AuthService {
   private URL = 'http://localhost:3000/api';
-
+  private redirectUrl: string | null = null;
   constructor(private http: HttpClient, private router: Router) { 
   }
 
@@ -45,6 +45,18 @@ export class AuthService {
     localStorage.removeItem('token');
     localStorage.removeItem('admin');
     this.router.navigate(['/']);
+  }
+
+  setRedirectUrl(url: string): void {
+    this.redirectUrl = url;
+  }
+
+  getRedirectUrl(): string | null {
+    return this.redirectUrl;
+  }
+
+  clearRedirectUrl(): void {
+    this.redirectUrl = null;
   }
 
 

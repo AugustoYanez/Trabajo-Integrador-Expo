@@ -13,6 +13,7 @@ import { Router, RouterEvent } from '@angular/router';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
+
   usuario: IUsuario = {
     nombre: '',
     apellido: '',
@@ -23,14 +24,15 @@ export class LoginComponent {
     contacto: Contacto.Email,
     rol: Rol.Usuario,
     telefono: '',
+    mascotas: [] = []
   };
 
   auth: AuthService = inject(AuthService);
   mensajeExito: string | null = null;
   mensajeError: string[] | null = null;
+  
 
-
-constructor(private Router: Router) {
+constructor(private router: Router) {
 
 }
 
@@ -52,20 +54,24 @@ constructor(private Router: Router) {
       return;
     }
 
-    this.auth.login(this.usuario).subscribe({
-      next: (res) => {
-        this.mensajeExito = res.message;
-        this.mensajeError = null;
-        localStorage.setItem('token', res.token);
-        if (res.admin) {
-          localStorage.setItem('admin', res.admin);
+  
+      this.auth.login(this.usuario).subscribe({
+        next: (res) => {
+          this.mensajeExito = res.message;
+          this.mensajeError = null;
+          localStorage.setItem('token', res.token);
+          if (res.admin) {
+            localStorage.setItem('admin', res.admin);
+          }
+          const redirectUrl = this.auth.getRedirectUrl() || '/';
+          this.auth.clearRedirectUrl();
+          this.router.navigate([redirectUrl]);
+        },
+        error: (err) => {
+          this.mensajeExito = null;
+          this.mensajeError = err.error;
         }
-        this.Router.navigate(['/']);
-      },      
-      error: (err) => {
-        this.mensajeExito = null;
-        this.mensajeError = err.error;
-      }  
-    });
-  }
+      });
+
+}
 }
