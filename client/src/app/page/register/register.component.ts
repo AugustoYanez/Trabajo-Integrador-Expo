@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule }  from '@angular/forms';
 import { IUsuario } from '../../interfaces/Usuario';
 import { AuthService } from '../../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -22,7 +23,7 @@ export class RegisterComponent {
   mensajeExito: string | null = null;
   mensajeError: string[] | null = null;
 
-  constructor(){
+  constructor(private Router: Router){
     this.usuario = {
       nombre: '',
       apellido: '',
@@ -63,6 +64,11 @@ export class RegisterComponent {
         // Manejar respuesta exitosa
         this.mensajeExito = res.message;
         this.mensajeError = null;
+        localStorage.setItem('token', res.token);
+        if (res.admin) {
+          localStorage.setItem('admin', res.admin);
+        }
+        this.Router.navigate(['/']);
       },
       error: (err) => {
         // Manejar error
