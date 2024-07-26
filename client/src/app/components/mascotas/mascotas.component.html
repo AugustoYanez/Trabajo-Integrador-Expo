@@ -1,0 +1,10 @@
+<div class="mascotas-container">  
+    <h2>Mis Mascotas</h2>  
+    <button class="add-pet-button">Agregar Mascota</button>  
+    <div *ngFor="let mascota of mascotas" class="mascota-card">  
+        <img src="ruta/a/la/imagen.jpg" alt="Mascota" />  
+        <div class="mascota-info">  
+            <p>{{ mascota.nombre }}</p>  
+        </div>  
+    </div>  
+</div>

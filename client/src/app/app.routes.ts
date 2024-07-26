@@ -1,22 +1,28 @@
-import { Routes } from '@angular/router';
-import { AppComponent } from './app.component';
-import { RegisterComponent } from './page/register/register.component';
-import { LoginComponent } from './page/login/login.component';
-import { HomeComponent } from './page/home/home.component';
-import { PerfilComponent } from './page/perfil/perfil.component';
-import { AdoptarComponent } from './page/adoptar/adoptar.component';
-import { AuthGuard } from './auth.guard';
+import { Routes } from '@angular/router';  
+import { AppComponent } from './app.component';  
+import { RegisterComponent } from './page/register/register.component';  
+import { LoginComponent } from './page/login/login.component';  
+import { HomeComponent } from './page/home/home.component';  
+import { PerfilComponent } from './page/perfil/perfil.component';  
+import { AdoptarComponent } from './page/adoptar/adoptar.component';  
+import { MascotasComponent } from './components/mascotas/mascotas.component';// Componente para gestionar mascotas  
+import { AjustesCuentaComponent } from './components/ajustes-cuenta/ajustes-cuenta.component';
+import { AuthGuard } from './auth.guard';  
+import { AdopcionComponent } from './page/adopcion/adopcion.component';  
 
-export const routes: Routes = [
-  { path: '', component: HomeComponent },
-  { path: 'register', component: RegisterComponent },
-  { path: 'login', component: LoginComponent },
-  {
-    path: '',
-    canActivate: [AuthGuard],
-    children: [
-      { path: 'perfil', component: PerfilComponent },
-      { path: 'adoptar', component: AdoptarComponent }
-    ]
-  }
+export const routes: Routes = [  
+  { path: '', component: HomeComponent },  
+  { path: 'register', component: RegisterComponent },  
+  { path: 'login', component: LoginComponent },  
+  {  
+    path: '',  
+    canActivate: [AuthGuard],  
+    children: [  
+      { path: 'perfil', component: PerfilComponent },  
+      { path: 'adoptar', component: AdoptarComponent },  
+      { path: 'adopcion', component: AdopcionComponent },  
+      { path: 'mascotas', component: MascotasComponent }, 
+      { path: 'ajustes-cuenta', component: AjustesCuentaComponent } 
+    ]  
+  }  
 ];

@@ -25,16 +25,17 @@ export class RegisterComponent {
 
   constructor(private Router: Router){
     this.usuario = {
-      nombre: '',
-      apellido: '',
-      email: '',
-      contrasena: '',
-      nroDocumento: '',
-      documento: Documento.Cuil,
-      contacto: Contacto.Email,
-      rol: Rol.Usuario,
-      telefono: '',
-    }
+    nombre: '',
+    apellido: '',
+    email: '',
+    contrasena: '',
+    nroDocumento: '',
+    documento: Documento.Cuil,
+    contacto: Contacto.Email,
+    rol: Rol.Usuario,
+    telefono: '',
+    mascotas: [] = []
+  };
   }
 
   getEnumValues(enumType: any): string[] {

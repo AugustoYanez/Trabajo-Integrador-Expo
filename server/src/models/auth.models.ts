@@ -1,5 +1,58 @@
 import mongoose from "mongoose";
-import { Documento, Contacto, Rol } from "../interfaces/enums";
+import { Estado, Documento, Contacto, Rol } from "../interfaces/enums";
+
+const mascotaSchema = new mongoose.Schema({
+    placaID: {
+      type: Number,
+      required: true
+    },
+    nombre: {
+      type: String,
+      required: true,
+      trim: true
+    },
+    apodo: { 
+      type: String,
+      trim: true
+    },
+    edadAprox: {
+      type: Number,
+      required: true
+    },
+    sexo: {
+      type: String,
+      required: true
+    },
+    raza: {
+      type: String,
+      required: true,
+      trim: true
+    },
+    especie: {
+      type: String,
+      required: true,
+      trim: true
+    },
+    estado: {
+      type: String,
+      enum: Object.values(Estado),
+      required: true
+    },
+    descripcion: {
+      type: String,
+      trim: true
+    },
+    imagen: {
+      type: String,
+      trim: true
+    },
+    caracteristicas: {
+      type: String,
+      trim: true
+    }
+  });
+  
+  export const Mascota = mongoose.model("Mascota", mascotaSchema);
 
 const usuario = new mongoose.Schema({
     nombre: {
@@ -49,6 +102,10 @@ const usuario = new mongoose.Schema({
         type: String,
         eunm: Object.values(Rol)
     },
+    mascotas: {
+        type: Array,
+        default: []
+    }
 })
 
 export const Usuario = mongoose.model('Usuario', usuario)

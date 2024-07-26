@@ -1,4 +1,6 @@
 import { Documento, Contacto, Rol } from "./enums"
+import { Mascota } from "./Mascota";
+
 
 export interface IUsuario {
     nombre: string;
@@ -10,4 +12,5 @@ export interface IUsuario {
     documento: Documento;
     contacto: Contacto;
     rol: Rol; 
+    mascotas: Mascota[];
 }

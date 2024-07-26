@@ -17,4 +17,6 @@ export class UserService {
   perfil(): Observable<IUsuario> {
     return this.http.get<IUsuario>(`${this.URL}`+ '/perfil');
   }
+
+  
 }
