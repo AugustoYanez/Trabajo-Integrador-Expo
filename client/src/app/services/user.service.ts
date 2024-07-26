@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { IUsuario } from '../interfaces/Usuario';
+import { IMascota } from '../interfaces/Mascota';
 import { Router } from '@angular/router';
 
 @Injectable({
@@ -17,6 +18,13 @@ export class UserService {
   perfil(): Observable<IUsuario> {
     return this.http.get<IUsuario>(`${this.URL}`+ '/perfil');
   }
+
+  
+  agregarMascota(mascota: IMascota): Observable<IMascota> {
+    return this.http.post<IMascota>(`${this.URL}`+ '', mascota);
+  }
+
+
 
   
 }

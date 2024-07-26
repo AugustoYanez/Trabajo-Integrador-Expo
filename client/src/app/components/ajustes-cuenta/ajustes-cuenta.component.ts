@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { Contacto, Documento, Rol } from '../../interfaces/enums';
 import { IUsuario } from '../../interfaces/Usuario';
 import { UserService } from '../../services/user.service';
-import { Mascota } from '../../interfaces/Mascota';
+import { IMascota } from '../../interfaces/Mascota';
 import { inject } from '@angular/core';
 @Component({
   selector: 'app-ajustes-cuenta',
