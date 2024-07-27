@@ -15,7 +15,7 @@ const mascotaSchema = new mongoose.Schema({
       type: String,
       trim: true
     },
-    edadAprox: {
+    edad: {
       type: Number,
       required: true
     },
