@@ -1,19 +1,19 @@
 import { Component, inject, OnInit } from '@angular/core';
-
 import { RouterOutlet, Routes, RouterModule } from '@angular/router';
 import { UserService } from '../../services/user.service';
-import  { IUsuario } from '../../interfaces/Usuario';
+import { IUsuario } from '../../interfaces/Usuario';
 import { Contacto, Documento, Rol } from '../../interfaces/enums';
 import { CommonModule } from '@angular/common';
+
 @Component({
   selector: 'app-perfil',
   standalone: true,
-  imports: [RouterModule, CommonModule  ],
+  imports: [RouterModule, CommonModule],
   templateUrl: './perfil.component.html',
-  styleUrl: './perfil.component.css'
+  styleUrls: ['./perfil.component.css'] // Corrección de 'styleUrl' a 'styleUrls'
 })
-export class PerfilComponent implements OnInit{
-  user: UserService = inject(UserService)
+export class PerfilComponent implements OnInit {
+  user: UserService = inject(UserService);
 
   usuario: IUsuario = {
     nombre: '',
@@ -25,16 +25,22 @@ export class PerfilComponent implements OnInit{
     contacto: Contacto.Email,
     rol: Rol.Usuario,
     telefono: '',
-    mascotas: []  
+    mascotas: []
   };
-  constructor(){}
+
+  constructor() {}
 
   ngOnInit(): void {
     this.user.perfil().subscribe(data => {
-        this.usuario = data; 
+      this.usuario = data;
     });
-}
+  }
+
   verMascotas() {
-   
+    console.log('verMascotas called');
+    this.user.perfil().subscribe(data => {
+      console.log('Mascotas data:', data.mascotas);
+      this.usuario.mascotas = data.mascotas;
+    });
   }
 }

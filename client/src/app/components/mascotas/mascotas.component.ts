@@ -3,32 +3,37 @@ import { Component } from '@angular/core';
 import { Contacto, Documento, Rol } from '../../interfaces/enums';
 import { IUsuario } from '../../interfaces/Usuario';
 import { UserService } from '../../services/user.service';
-import { Mascota } from '../../interfaces/Mascota';
+import { IMascota } from '../../interfaces/Mascota';
+import { inject } from '@angular/core';
+import { RouterOutlet, Routes, RouterModule } from '@angular/router';
 @Component({
   selector: 'app-mascotas',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterOutlet, RouterModule],
   templateUrl: './mascotas.component.html',
   styleUrl: './mascotas.component.css'
 })
 export class MascotasComponent {
+  user: UserService = inject(UserService)
   usuario: IUsuario | null = null;
-  mascotas: Mascota[] = [];
+  mascotas: IMascota[] = [];
 
-  constructor(private usuarioService: UserService) { }  
+  constructor(private usuarioService: UserService) {
+
+   }  
 
   ngOnInit() {  
-    this.usuarioService.perfil().subscribe(  
-      (data: IUsuario) => {  
-        this.usuario = data;  
-      },  
-      (error) => {  
-        console.error('Error al obtener usuario:', error);  
-      }  
-    );  
+    this.user.perfil().subscribe(data => {
+      this.usuario = data;
+      this.listarMascotas();
+    }); 
   }  
 
-  obtenerMascotas(): Mascota[] {  
-    return this.usuario ? this.usuario.mascotas : [];  
-  }  
+  listarMascotas() {
+    console.log('Listando mascotas:', this.usuario?.mascotas);
+    this.mascotas = this.usuario?.mascotas || [];
+  }
+
+ 
+
 }

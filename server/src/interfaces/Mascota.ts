@@ -1,15 +1,12 @@
 import { Estado } from './enums';
 
-export interface Mascota {
-    placaID:number;
+export interface IMascota {
+    placaID:string;
     nombre: string;
     apodo: string;
-    descripcionFisica: string;
-    edad: number;
-    raza: string;
-    especie: string;
     estado: Estado;
+    edad: number;
     descripcion: string;
     imagen: string;
-    
+    caracteristicas: string
 }

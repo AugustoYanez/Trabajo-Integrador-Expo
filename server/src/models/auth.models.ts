@@ -1,60 +1,9 @@
 import mongoose from "mongoose";
 import { Estado, Documento, Contacto, Rol } from "../interfaces/enums";
-
-const mascotaSchema = new mongoose.Schema({
-    placaID: {
-      type: Number,
-      required: true
-    },
-    nombre: {
-      type: String,
-      required: true,
-      trim: true
-    },
-    apodo: { 
-      type: String,
-      trim: true
-    },
-    edad: {
-      type: Number,
-      required: true
-    },
-    sexo: {
-      type: String,
-      required: true
-    },
-    raza: {
-      type: String,
-      required: true,
-      trim: true
-    },
-    especie: {
-      type: String,
-      required: true,
-      trim: true
-    },
-    estado: {
-      type: String,
-      enum: Object.values(Estado),
-      required: true
-    },
-    descripcion: {
-      type: String,
-      trim: true
-    },
-    imagen: {
-      type: String,
-      trim: true
-    },
-    caracteristicas: {
-      type: String,
-      trim: true
-    }
-  });
-  
-  export const Mascota = mongoose.model("Mascota", mascotaSchema);
-
-const usuario = new mongoose.Schema({
+import { ECDH } from "crypto";
+import { IUsuario } from "../interfaces/Usuario";
+import { IMascota } from "../interfaces/Mascota";
+const usuarioSchema = new mongoose.Schema<IUsuario>({
     nombre: {
         type: String,
         required: true,
@@ -90,7 +39,7 @@ const usuario = new mongoose.Schema({
     },
     documento: {
         type: String,
-        eunm: Object.values(Documento),
+        enum: Object.values(Documento),
         required: true,
     },
     contacto: {
@@ -100,12 +49,66 @@ const usuario = new mongoose.Schema({
     },
     rol: {
         type: String,
-        eunm: Object.values(Rol)
+        enum: Object.values(Rol)
     },
-    mascotas: {
-        type: Array,
-        default: []
-    }
+    mascotas: [
+      { 
+        type: mongoose.Schema.Types.ObjectId, ref: 'Mascota' 
+      }
+    ]
 })
 
-export const Usuario = mongoose.model('Usuario', usuario)
+export const Usuario = mongoose.model('Usuario', usuarioSchema)
+
+
+const mascotaSchema = new mongoose.Schema<IMascota>({
+
+  placaID: {
+    type: String,
+    required: true
+  },
+  nombre: {
+    type: String,
+    required: true,
+    trim: true
+  },
+  apodo: {
+    type: String,
+    trim: true
+  },
+  estado: {
+    type: String,
+    enum: Object.values(Estado),
+    required: true,
+},
+  edad: {
+    type: Number,
+    required: true
+  },
+  descripcion: {
+    type: String,
+    required: true,
+    trim: true
+  },
+  imagen: {
+    type: String,
+    required: true
+  },
+  caracteristicas: {
+    type: String,
+    required: true,
+    trim: true
+  },
+
+})
+
+  export const Mascota = mongoose.model('Mascota', mascotaSchema)
+
+
+
+
+
+
+
+
+

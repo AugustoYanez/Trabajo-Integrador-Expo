@@ -1,5 +1,6 @@
 import { Documento, Contacto, Rol } from "./enums"
-import { Mascota } from "./Mascota";
+import { IMascota } from "./Mascota";
+import mongoose, { Document, Schema } from 'mongoose';
 export interface IUsuario {
     nombre: string;
     apellido: string
@@ -10,5 +11,5 @@ export interface IUsuario {
     documento: Documento;
     contacto: Contacto;
     rol: Rol; 
-    mascotas: Mascota[];
+    mascotas: mongoose.Types.ObjectId[];
 }
