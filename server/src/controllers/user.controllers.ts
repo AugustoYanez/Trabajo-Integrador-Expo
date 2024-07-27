@@ -24,43 +24,60 @@ export const perfil = async (req: IReq, res: IRes) => {
 }
 
 // POST MASCOTA
-export const addMascota = async (req: IReq, res: IRes) => {
-    try {
-        const {
-            placaID, nombre, apodo, edad, descripcion, imagen, caracteristicas
-        }: IMascota = req.body;
+export const addMascota = async (req: IReq, res: IRes) => {  
+    try {  
+        const {  
+            placaID, nombre, apodo, estado, edad, descripcion, imagen, caracteristicas  
+        }: IMascota = req.body;  
 
-        if (!placaID || !nombre || !apodo || !edad || !descripcion || !imagen || !caracteristicas) {
-            res.status(400).json({ error: 'Faltan campos requeridos' });
-            return;
-        }
+        // Verificación de campos requeridos  
+        if (!placaID || !nombre || !apodo || !estado || !edad || !descripcion || !imagen || !caracteristicas) {  
+            res.status(400).json({ error: 'Faltan campos requeridos' });  
+            return;  
+        }  
 
-        const { email } = (req as CustomRequest).payload as Payload;
-        const usuario = await Usuario.findOne({ email });
+        const { email } = (req as CustomRequest).payload as Payload;  
+        const usuario = await Usuario.findOne({ email }).populate('mascotas'); // Asegúrate de que las mascotas estén pobladas  
 
-        if (!usuario) {
-            res.status(404).json({ error: 'Usuario no encontrado' });
-            return;
-        }
+        if (!usuario) {  
+            res.status(404).json({ error: 'Usuario no encontrado' });  
+            return;  
+        }  
 
-        const nuevaMascota = new Mascota({
-            placaID,
-            nombre,
-            apodo,
-            edad,
-            descripcion,
-            imagen,
-            caracteristicas
-        });
+        // Comprobar si la mascota ya existe
+        const mascotasPobladas = await Mascota.find({ _id: { $in: usuario.mascotas } });
 
-        const mascotaGuardada = await nuevaMascota.save();
+        const mascotaExistente = mascotasPobladas.find(mascota =>   
+            mascota.placaID === placaID || mascota.nombre === nombre || mascota.apodo === apodo  
+        );  
 
-        usuario.mascotas.push(mascotaGuardada._id);
-        await usuario.save();
+        if (mascotaExistente) {  
+            res.status(400).json({ error: 'Ya tienes una mascota con ese placaID, nombre o apodo' });  
+            return;  
+        }  
 
-        res.status(201).json(mascotaGuardada);
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: 'Error al agregar la mascota' });
-    }
+        // Crear una nueva instancia de la mascota  
+        const nuevaMascota = new Mascota({  
+            placaID,  
+            nombre,  
+            apodo,  
+            estado,  
+            edad,  
+            descripcion,  
+            imagen,  
+            caracteristicas  
+        });  
+
+        // Guardar la nueva mascota en la base de datos  
+        const mascotaGuardada = await nuevaMascota.save();  
+
+        // Agregar la mascota guardada al usuario  
+        usuario.mascotas.push(mascotaGuardada._id);  
+        await usuario.save();  
+
+        res.status(201).json(mascotaGuardada);  
+    } catch (error) {  
+        console.error(error);  
+        res.status(500).json({ error: 'Error al agregar la mascota' });  
+    }  
 }

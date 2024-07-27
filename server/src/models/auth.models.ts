@@ -1,8 +1,9 @@
 import mongoose from "mongoose";
 import { Estado, Documento, Contacto, Rol } from "../interfaces/enums";
 import { ECDH } from "crypto";
-
-const usuarioSchema = new mongoose.Schema({
+import { IUsuario } from "../interfaces/Usuario";
+import { IMascota } from "../interfaces/Mascota";
+const usuarioSchema = new mongoose.Schema<IUsuario>({
     nombre: {
         type: String,
         required: true,
@@ -38,7 +39,7 @@ const usuarioSchema = new mongoose.Schema({
     },
     documento: {
         type: String,
-        eunm: Object.values(Documento),
+        enum: Object.values(Documento),
         required: true,
     },
     contacto: {
@@ -48,7 +49,7 @@ const usuarioSchema = new mongoose.Schema({
     },
     rol: {
         type: String,
-        eunm: Object.values(Rol)
+        enum: Object.values(Rol)
     },
     mascotas: [
       { 
@@ -60,10 +61,10 @@ const usuarioSchema = new mongoose.Schema({
 export const Usuario = mongoose.model('Usuario', usuarioSchema)
 
 
-const mascotaSchema = new mongoose.Schema({
+const mascotaSchema = new mongoose.Schema<IMascota>({
 
   placaID: {
-    type: Number,
+    type: String,
     required: true
   },
   nombre: {
@@ -75,6 +76,11 @@ const mascotaSchema = new mongoose.Schema({
     type: String,
     trim: true
   },
+  estado: {
+    type: String,
+    enum: Object.values(Estado),
+    required: true,
+},
   edad: {
     type: Number,
     required: true
