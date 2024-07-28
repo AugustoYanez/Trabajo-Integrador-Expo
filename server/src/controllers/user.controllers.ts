@@ -23,6 +23,35 @@ export const perfil = async (req: IReq, res: IRes) => {
     }
 }
 
+export const traerMascotas = async (req: IReq, res: IRes) => {
+    try {
+        const {_id} = (req as CustomRequest).payload as Payload;
+        const found = await Usuario.findOne({ _id }).populate('mascotas').exec();
+        if (!found) {
+            res.status(404).json({ error: 'Usuario no encontrado' });
+            return;
+        }
+        res.status(200).json(found.mascotas);
+    } catch (error) {
+        res.status(500).json(error);
+    }
+}
+
+export const traerMascota = async (req: IReq, res: IRes) => {
+    try {
+        const {id} = req.params;
+        console.log(id);
+        const found = await Mascota.findOne({ _id:id });
+        if (!found) {
+            res.status(404).json({ error: 'Mascota no encontrado' });
+            return;
+        }
+        res.status(200).json(found);
+    } catch (error) {
+        res.status(500).json(error);
+    }
+}
+
 // POST MASCOTA
 export const addMascota = async (req: IReq, res: IRes) => {  
     try {  
@@ -30,14 +59,8 @@ export const addMascota = async (req: IReq, res: IRes) => {
             placaID, nombre, apodo, estado, edad, descripcion, imagen, caracteristicas  
         }: IMascota = req.body;  
 
-        // Verificación de campos requeridos  
-        if (!placaID || !nombre || !apodo || !estado || !edad || !descripcion || !imagen || !caracteristicas) {  
-            res.status(400).json({ error: 'Faltan campos requeridos' });  
-            return;  
-        }  
-
-        const { email } = (req as CustomRequest).payload as Payload;  
-        const usuario = await Usuario.findOne({ email }).populate('mascotas'); // Asegúrate de que las mascotas estén pobladas  
+        const { _id } = (req as CustomRequest).payload as Payload;  
+        const usuario = await Usuario.findById({ _id }).populate('mascotas');
 
         if (!usuario) {  
             res.status(404).json({ error: 'Usuario no encontrado' });  
@@ -48,11 +71,11 @@ export const addMascota = async (req: IReq, res: IRes) => {
         const mascotasPobladas = await Mascota.find({ _id: { $in: usuario.mascotas } });
 
         const mascotaExistente = mascotasPobladas.find(mascota =>   
-            mascota.placaID === placaID || mascota.nombre === nombre || mascota.apodo === apodo  
+            mascota.placaID === placaID
         );  
 
         if (mascotaExistente) {  
-            res.status(400).json({ error: 'Ya tienes una mascota con ese placaID, nombre o apodo' });  
+            res.status(400).json({ error: 'Ya tienes una mascota con ese placaID' });  
             return;  
         }  
 
