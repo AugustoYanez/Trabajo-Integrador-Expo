@@ -10,7 +10,7 @@ import { AjustesCuentaComponent } from './components/ajustes-cuenta/ajustes-cuen
 import { AuthGuard } from './auth.guard';  
 import { AdopcionComponent } from './page/adopcion/adopcion.component';  
 import { AgregarMascotaComponent } from './components/agregar-mascota/agregar-mascota.component';
-
+import { MascotaComponent } from './components/mascota/mascota.component';
 export const routes: Routes = [ 
 
   { path: '', component: HomeComponent },  
@@ -24,7 +24,9 @@ export const routes: Routes = [
       { path: 'perfil', component: PerfilComponent },  
       { path: 'adoptar', component: AdoptarComponent },  
       { path: 'adopcion', component: AdopcionComponent },  
-      { path: 'ajustes-cuenta', component: AjustesCuentaComponent } 
+      { path: 'ajustes-cuenta', component: AjustesCuentaComponent } ,
+      { path: 'agg-mascota', component: AgregarMascotaComponent } ,
+      
     ]  
   }  ,
 
@@ -33,7 +35,8 @@ export const routes: Routes = [
   canActivate: [AuthGuard],
   children : [
     { path: '', component: MascotasComponent },
-    { path: 'agg-mascota', component: AgregarMascotaComponent }
+    { path: 'agg-mascota', component: AgregarMascotaComponent },
+    { path: 'mascota/:id', component: MascotaComponent }
   ]
 }
 ];
