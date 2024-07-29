@@ -104,3 +104,36 @@ export const addMascota = async (req: IReq, res: IRes) => {
         res.status(500).json({ error: 'Error al agregar la mascota' });  
     }  
 }
+
+export const eliminarMascota = async (req: IReq, res: IRes) => {
+    try {
+        const { _id } = (req as CustomRequest).payload as Payload;
+        const { id } = req.params;
+
+        // Buscar al usuario
+        const usuario = await Usuario.findById({_id}).populate('mascotas');
+        if (!usuario) {
+            res.status(404).json({ error: 'Usuario no encontrado' });
+            return;
+        }
+
+        // Verificar que la mascota pertenece al usuario
+        const mascotaIndex = usuario.mascotas.findIndex(mascotaId => mascotaId._id.toString() === id);
+        if (mascotaIndex === -1) {
+            res.status(404).json({ error: 'Mascota no encontrada en el perfil del usuario' });
+            return;
+        }
+
+        // Eliminar la mascota de la colección Mascota
+        await Mascota.findByIdAndDelete(id);
+
+        // Eliminar la referencia de la mascota del usuario
+        usuario.mascotas.splice(mascotaIndex, 1);
+        await usuario.save();
+
+        res.status(200).json({ message: 'Mascota eliminada correctamente' });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Error al eliminar la mascota' });
+    }
+};
