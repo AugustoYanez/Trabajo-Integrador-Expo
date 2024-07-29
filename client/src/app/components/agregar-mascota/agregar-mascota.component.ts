@@ -21,6 +21,7 @@ export class AgregarMascotaComponent {
   currentStep: number = 0; // Para controlar el paso actual
   totalSteps: number = 8;  // Total de pasos en el formulario
   enumEstado: typeof Estado = Estado;
+  imagenArchivo: File | null = null; // Para manejar el archivo de imagen
 
   constructor(private fb: FormBuilder) {
     this.mascotaForm = this.fb.group({
@@ -30,7 +31,6 @@ export class AgregarMascotaComponent {
       edad: ['', [Validators.required, Validators.pattern("^[0-9]*$")]],
       estado: ['', Validators.required],
       descripcion: ['', Validators.required],
-      imagen: ['', Validators.required],
       caracteristicas: ['', Validators.required]
     });
   }
@@ -83,9 +83,21 @@ export class AgregarMascotaComponent {
     return (this.currentStep / this.totalSteps) * 100;
   }
 
+  onImageSelected(event: any) {
+    if (event.target.files.length > 0) {
+      this.imagenArchivo = <File>event.target.files[0];
+      this.mascotaForm.get('imagen')?.setValue(this.imagenArchivo); // Establece el nombre del archivo en el campo del formulario
+      console.log(this.mascotaForm.get('imagen'));
+    }
+  }
+
   onSubmit() {
     if (this.mascotaForm.valid) {
-      const nuevaMascota: IMascota = this.mascotaForm.value;
+      const nuevaMascota: IMascota = {
+        ...this.mascotaForm.value,
+        imagen: this.imagenArchivo
+      };
+
       console.log('Nueva mascota:', nuevaMascota);
       this.userService.agregarMascota(nuevaMascota).subscribe({
         next: (respuesta) => {

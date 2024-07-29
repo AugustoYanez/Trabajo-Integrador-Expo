@@ -1,12 +1,12 @@
 <div class="flex items-center justify-center min-h-screen bg-gray-900 p-4">
   <div class="container bg-white rounded-lg shadow-md max-w-3xl w-full p-6">
     <h2 class="text-2xl font-bold text-center mb-4">Registrar Mascota</h2>
-    
+
     <div class="relative mb-4">
       <div class="progress-bar bg-gray-200 rounded-full h-2.5 relative">
         <div class="progress bg-blue-500 h-full rounded-full" [style.width.%]="progressPercentage"></div>
       </div>
-  
+
     </div>
 
     <form [formGroup]="mascotaForm" (ngSubmit)="onSubmit()">
@@ -14,8 +14,11 @@
       <div *ngIf="currentStep === 0">
         <div class="mb-4">
           <label class="block text-gray-700">¿Cuál es el ID de la placa?</label>
-          <input type="text" formControlName="placaID" placeholder="Ingrese ID de la placa" class="mt-1 block w-full border border-gray-300 rounded-md p-2" />
-          <div *ngIf="mascotaForm.controls['placaID'].invalid && (mascotaForm.controls['placaID'].dirty || mascotaForm.controls['placaID'].touched)" class="text-red-500 text-sm mt-1">
+          <input type="text" formControlName="placaID" placeholder="Ingrese ID de la placa"
+            class="mt-1 block w-full border border-gray-300 rounded-md p-2" />
+          <div
+            *ngIf="mascotaForm.controls['placaID'].invalid && (mascotaForm.controls['placaID'].dirty || mascotaForm.controls['placaID'].touched)"
+            class="text-red-500 text-sm mt-1">
             Este campo es requerido.
           </div>
         </div>
@@ -25,8 +28,11 @@
       <div *ngIf="currentStep === 1">
         <div class="mb-4">
           <label class="block text-gray-700">¿Cuál es el nombre de la mascota?</label>
-          <input type="text" formControlName="nombre" placeholder="Ingrese el nombre" class="mt-1 block w-full border border-gray-300 rounded-md p-2" />
-          <div *ngIf="mascotaForm.controls['nombre'].invalid && (mascotaForm.controls['nombre'].dirty || mascotaForm.controls['nombre'].touched)" class="text-red-500 text-sm mt-1">
+          <input type="text" formControlName="nombre" placeholder="Ingrese el nombre"
+            class="mt-1 block w-full border border-gray-300 rounded-md p-2" />
+          <div
+            *ngIf="mascotaForm.controls['nombre'].invalid && (mascotaForm.controls['nombre'].dirty || mascotaForm.controls['nombre'].touched)"
+            class="text-red-500 text-sm mt-1">
             Este campo es requerido.
           </div>
         </div>
@@ -36,8 +42,11 @@
       <div *ngIf="currentStep === 2">
         <div class="mb-4">
           <label class="block text-gray-700">¿Cuál es el apodo de la mascota?</label>
-          <input type="text" formControlName="apodo" placeholder="Ingrese el apodo" class="mt-1 block w-full border border-gray-300 rounded-md p-2" />
-          <div *ngIf="mascotaForm.controls['apodo'].invalid && (mascotaForm.controls['apodo'].dirty || mascotaForm.controls['apodo'].touched)" class="text-red-500 text-sm mt-1">
+          <input type="text" formControlName="apodo" placeholder="Ingrese el apodo"
+            class="mt-1 block w-full border border-gray-300 rounded-md p-2" />
+          <div
+            *ngIf="mascotaForm.controls['apodo'].invalid && (mascotaForm.controls['apodo'].dirty || mascotaForm.controls['apodo'].touched)"
+            class="text-red-500 text-sm mt-1">
             Este campo es requerido.
           </div>
         </div>
@@ -47,8 +56,11 @@
       <div *ngIf="currentStep === 3">
         <div class="mb-4">
           <label class="block text-gray-700">¿Cuál es la edad de la mascota?</label>
-          <input type="number" formControlName="edad" placeholder="Ingrese la edad" class="mt-1 block w-full border border-gray-300 rounded-md p-2" />
-          <div *ngIf="mascotaForm.controls['edad'].invalid && (mascotaForm.controls['edad'].dirty || mascotaForm.controls['edad'].touched)" class="text-red-500 text-sm mt-1">
+          <input type="number" formControlName="edad" placeholder="Ingrese la edad"
+            class="mt-1 block w-full border border-gray-300 rounded-md p-2" />
+          <div
+            *ngIf="mascotaForm.controls['edad'].invalid && (mascotaForm.controls['edad'].dirty || mascotaForm.controls['edad'].touched)"
+            class="text-red-500 text-sm mt-1">
             Este campo es requerido y debe ser un número.
           </div>
         </div>
@@ -62,7 +74,9 @@
             <option value="" disabled selected>Selecciona el estado</option>
             <option *ngFor="let valor of getEnumValues(enumEstado)" [value]="valor">{{valor}}</option>
           </select>
-          <div *ngIf="mascotaForm.controls['estado'].invalid && (mascotaForm.controls['estado'].dirty || mascotaForm.controls['estado'].touched)" class="text-red-500 text-sm mt-1">
+          <div
+            *ngIf="mascotaForm.controls['estado'].invalid && (mascotaForm.controls['estado'].dirty || mascotaForm.controls['estado'].touched)"
+            class="text-red-500 text-sm mt-1">
             Este campo es requerido.
           </div>
         </div>
@@ -72,8 +86,11 @@
       <div *ngIf="currentStep === 5">
         <div class="mb-4">
           <label class="block text-gray-700">¿Cuál es la descripción de la mascota?</label>
-          <textarea formControlName="descripcion" placeholder="Ingrese la descripción" class="mt-1 block w-full border border-gray-300 rounded-md p-2"></textarea>
-          <div *ngIf="mascotaForm.controls['descripcion'].invalid && (mascotaForm.controls['descripcion'].dirty || mascotaForm.controls['descripcion'].touched)" class="text-red-500 text-sm mt-1">
+          <textarea formControlName="descripcion" placeholder="Ingrese la descripción"
+            class="mt-1 block w-full border border-gray-300 rounded-md p-2"></textarea>
+          <div
+            *ngIf="mascotaForm.controls['descripcion'].invalid && (mascotaForm.controls['descripcion'].dirty || mascotaForm.controls['descripcion'].touched)"
+            class="text-red-500 text-sm mt-1">
             Este campo es requerido.
           </div>
         </div>
@@ -82,30 +99,42 @@
       <!-- Paso 7: Imagen -->
       <div *ngIf="currentStep === 6">
         <div class="mb-4">
-          <label class="block text-gray-700">¿Cuál es la URL de la imagen de la mascota?</label>
-          <input type="text" formControlName="imagen" placeholder="Ingrese la URL de la imagen" class="mt-1 block w-full border border-gray-300 rounded-md p-2" />
-          <div *ngIf="mascotaForm.controls['imagen'].invalid && (mascotaForm.controls['imagen'].dirty || mascotaForm.controls['imagen'].touched)" class="text-red-500 text-sm mt-1">
+          <label class="block text-gray-700">¿Cuál es la imagen de la mascota?</label>
+          <input type="file" (change)="onImageSelected($event)" 
+            class="mt-1 block w-full border border-gray-300 rounded-md p-2" />
+          <div *ngIf="imagenArchivo" class="mt-2">
+            <span class="text-gray-700">Archivo seleccionado: {{ imagenArchivo.name }}</span>
+          </div>
+          <div
+            *ngIf="mascotaForm.controls['imagen'].invalid && (mascotaForm.controls['imagen'].dirty || mascotaForm.controls['imagen'].touched)"
+            class="text-red-500 text-sm mt-1">
             Este campo es requerido.
           </div>
         </div>
       </div>
 
+
       <!-- Paso 8: Características -->
       <div *ngIf="currentStep === 7">
         <div class="mb-4">
           <label class="block text-gray-700">¿Cuáles son las características de la mascota?</label>
-          <input type="text" formControlName="caracteristicas" placeholder="Ingrese las características" class="mt-1 block w-full border border-gray-300 rounded-md p-2" />
-          <div *ngIf="mascotaForm.controls['caracteristicas'].invalid && (mascotaForm.controls['caracteristicas'].dirty || mascotaForm.controls['caracteristicas'].touched)" class="text-red-500 text-sm mt-1">
+          <input type="text" formControlName="caracteristicas" placeholder="Ingrese las características"
+            class="mt-1 block w-full border border-gray-300 rounded-md p-2" />
+          <div
+            *ngIf="mascotaForm.controls['caracteristicas'].invalid && (mascotaForm.controls['caracteristicas'].dirty || mascotaForm.controls['caracteristicas'].touched)"
+            class="text-red-500 text-sm mt-1">
             Este campo es requerido.
           </div>
         </div>
       </div>
 
       <div class="flex justify-between mt-6">
-        <button type="button" (click)="previousStep()" class="bg-gray-500 text-white p-2 rounded" *ngIf="currentStep > 0">
+        <button type="button" (click)="previousStep()" class="bg-gray-500 text-white p-2 rounded"
+          *ngIf="currentStep > 0">
           Atrás
         </button>
-        <button type="button" (click)="nextStep()" class="bg-blue-500 text-white p-2 rounded" *ngIf="currentStep < totalSteps - 1">
+        <button type="button" (click)="nextStep()" class="bg-blue-500 text-white p-2 rounded"
+          *ngIf="currentStep < totalSteps - 1">
           Siguiente
         </button>
       </div>

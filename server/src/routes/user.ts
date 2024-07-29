@@ -10,6 +10,6 @@ const user = Router()
 user.get('/perfil', authenticateToken, perfil)
 user.get('/mascotas', authenticateToken, traerMascotas)
 user.get('/mascotas/:id', authenticateToken, validate(idSchema), traerMascota)
-user.post('/mascotas', authenticateToken, validate(registerMascota), addMascota)
+user.post('/mascotas', authenticateToken, addMascota)
 
 export default user;
