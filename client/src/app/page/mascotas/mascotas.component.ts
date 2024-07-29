@@ -6,10 +6,12 @@ import { UserService } from '../../services/user.service';
 import { IMascota } from '../../interfaces/Mascota';
 import { inject } from '@angular/core';
 import { RouterOutlet, Routes, RouterModule } from '@angular/router';
+import { MascotaMiniComponent } from '../../components/mascota-mini/mascota-mini.component';
+
 @Component({
   selector: 'app-mascotas',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, RouterModule],
+  imports: [CommonModule, RouterOutlet, RouterModule, MascotaMiniComponent],
   templateUrl: './mascotas.component.html',
   styleUrl: './mascotas.component.css'
 })
@@ -18,21 +20,15 @@ export class MascotasComponent {
   usuario: IUsuario | null = null;
   mascotas: IMascota[] = [];
 
-  constructor(private usuarioService: UserService) {
+  constructor() {
 
    }  
 
   ngOnInit() {  
-    this.user.perfil().subscribe(data => {
-      this.usuario = data;
-      this.listarMascotas();
+    this.user.traerMascotas().subscribe(data => {
+      this.mascotas = data || [];
     }); 
   }  
-
-  listarMascotas() {
-    console.log('Listando mascotas:', this.usuario?.mascotas);
-    this.mascotas = this.usuario?.mascotas || [];
-  }
 
  
 

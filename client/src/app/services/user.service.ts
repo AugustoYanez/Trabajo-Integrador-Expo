@@ -18,10 +18,13 @@ export class UserService {
   perfil(): Observable<IUsuario> {
     return this.http.get<IUsuario>(`${this.URL}`+ '/perfil');
   }
-
+ 
+  traerMascotas(): Observable<IMascota[]> {
+    return this.http.get<IMascota[]>(`${this.URL}`+ '/mascotas');
+  }
   
   agregarMascota(mascota: IMascota): Observable<IMascota> {
-    return this.http.post<IMascota>(`${this.URL}`+ '', mascota);
+    return this.http.post<IMascota>(`${this.URL}`+ '/mascotas', mascota);
   }
 
 

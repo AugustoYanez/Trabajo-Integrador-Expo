@@ -1,6 +1,5 @@
 import { Documento, Contacto, Rol } from "./enums"
-import { IMascota } from "./Mascota";
-import mongoose, { Document, Schema } from 'mongoose';
+import mongoose from 'mongoose';
 export interface IUsuario {
     nombre: string;
     apellido: string
