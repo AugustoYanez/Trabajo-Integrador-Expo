@@ -52,13 +52,9 @@ export const traerMascota = async (req: IReq, res: IRes) => {
     }
 }
 
-// POST MASCOTA
 export const addMascota = async (req: IReq, res: IRes) => {  
     try {  
-        const { placaID, imagen, nombre, apodo, estado, edad, descripcion, caracteristicas }: IMascota = req.body;
-        console.log(req.body);
-           
-
+        const { placaID, nombre, apodo, estado, edad, descripcion,imagen, caracteristicas }: IMascota = req.body;
         const { _id } = (req as CustomRequest).payload as Payload;  
         const usuario = await Usuario.findById({ _id }).populate('mascotas');
 
