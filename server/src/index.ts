@@ -2,22 +2,28 @@ import express from "express";
 import dotenv from "dotenv";
 import router from "./routes";
 import { db } from "./database";
-import { Documento } from "./interfaces/enums";
-const cors = require('cors');
+import path from "path";
+const cors = require('cors')
+import multer from "multer";
+import { upload } from "./middleware/multer";
 
-
+dotenv.config();
 const app = express();
-
-
-dotenv.config()
 const PORT = process.env.PORT;
 
-app.use(cors())
+// Middleware
+app.use(cors());
 app.use(express.json());
-dotenv.config()
+app.use('/uploads', express.static(path.join(__dirname, 'public/uploads')));
+app.use(upload.single('file'))
 
-db()
+
+// Conectar a la base de datos
+db();
+
+// Rutas
 app.use('/', router);
+
 app.listen(PORT, () => {
-    console.log(`SERIDOR ACTIVO EN EL PUERTO ${PORT}`);
-})
+  console.log(`Servidor activo en el puerto ${PORT}`);
+});

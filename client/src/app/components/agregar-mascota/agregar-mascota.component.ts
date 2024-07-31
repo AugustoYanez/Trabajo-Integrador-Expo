@@ -6,6 +6,8 @@ import { inject } from '@angular/core';
 import { IMascota } from '../../interfaces/Mascota';
 import { Router } from '@angular/router';
 import { Estado } from '../../interfaces/enums';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { throwError } from 'rxjs';
 
 @Component({
   selector: 'app-agregar-mascota',
@@ -21,8 +23,11 @@ export class AgregarMascotaComponent {
   currentStep: number = 0; // Para controlar el paso actual
   totalSteps: number = 8;  // Total de pasos en el formulario
   enumEstado: typeof Estado = Estado;
+  imagenArchivo: File | null = null; // Para manejar el archivo de imagen
+  url = 'http://localhost:3000/'
+  urlImagen = "";
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private http: HttpClient) {
     this.mascotaForm = this.fb.group({
       placaID: ['', Validators.required],
       nombre: ['', Validators.required],
@@ -30,7 +35,6 @@ export class AgregarMascotaComponent {
       edad: ['', [Validators.required, Validators.pattern("^[0-9]*$")]],
       estado: ['', Validators.required],
       descripcion: ['', Validators.required],
-      imagen: ['', Validators.required],
       caracteristicas: ['', Validators.required]
     });
   }
@@ -83,19 +87,43 @@ export class AgregarMascotaComponent {
     return (this.currentStep / this.totalSteps) * 100;
   }
 
+  onImageSelected(event: any) {
+    const file: File = event.target.files[0];
+    if (file) {
+      this.imagenArchivo = file;
+    }
+  }
+
   onSubmit() {
     if (this.mascotaForm.valid) {
-      const nuevaMascota: IMascota = this.mascotaForm.value;
-      console.log('Nueva mascota:', nuevaMascota);
-      this.userService.agregarMascota(nuevaMascota).subscribe({
-        next: (respuesta) => {
-          console.log('Mascota agregada:', respuesta);
-          this.router.navigate(['/mascotas']); // Redireccionar al enviar
-        },
-        error: (error) => {
-          console.error('Error al agregar mascota:', error);
-        }
-      });
+      if (this.imagenArchivo) {
+        const imageForm = new FormData();
+        imageForm.append('file', this.imagenArchivo, this.imagenArchivo?.name);
+        const url = this.http.post<string>(this.url + 'image/upload', imageForm)
+        url.subscribe({
+          next: (data) => {
+            console.log('Imagen subida correctamente:', data);
+            this.urlImagen = data;
+            let nuevaMascota: IMascota = {
+              ...this.mascotaForm.value,
+              imagen: this.urlImagen || ""  // Agregar la url de la imagen al objeto mascota si hay imagen subida
+            };
+            console.log('Nueva mascota:', nuevaMascota);
+            this.userService.agregarMascota(nuevaMascota).subscribe({
+              next: (respuesta) => {
+                console.log('Mascota agregada:', respuesta);
+                this.router.navigate(['/mascotas']); // Redireccionar al enviar
+              },
+              error: (error) => {
+                console.error('Error al agregar mascota:', error);
+              }
+            });
+          },
+          error: (err: any) => {
+            return throwError(() => err)
+          }
+        })
+      }
     } else {
       console.log('Formulario no válido', this.mascotaForm.errors);
       console.log('Errores en los campos:', this.mascotaForm.controls);

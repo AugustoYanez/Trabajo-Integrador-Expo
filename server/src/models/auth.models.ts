@@ -1,8 +1,9 @@
 import mongoose from "mongoose";
 import { Estado, Documento, Contacto, Rol } from "../interfaces/enums";
-import { ECDH } from "crypto";
 import { IUsuario } from "../interfaces/Usuario";
 import { IMascota } from "../interfaces/Mascota";
+
+
 const usuarioSchema = new mongoose.Schema<IUsuario>({
     nombre: {
         type: String,

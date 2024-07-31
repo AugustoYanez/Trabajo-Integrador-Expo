@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { IUsuario } from '../interfaces/Usuario';
 import { IMascota } from '../interfaces/Mascota';
@@ -18,10 +18,13 @@ export class UserService {
   perfil(): Observable<IUsuario> {
     return this.http.get<IUsuario>(`${this.URL}`+ '/perfil');
   }
-
+ 
+  traerMascotas(): Observable<IMascota[]> {
+    return this.http.get<IMascota[]>(`${this.URL}`+ '/mascotas');
+  }
   
   agregarMascota(mascota: IMascota): Observable<IMascota> {
-    return this.http.post<IMascota>(`${this.URL}`+ '', mascota);
+    return this.http.post<IMascota>(`${this.URL}`+ '/mascotas', mascota);
   }
 
 
