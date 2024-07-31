@@ -1,7 +1,7 @@
 import { Router } from 'express'
 import { authenticateToken } from '../middleware/validateToken'
 import validate from '../middleware/validateSchema'
-import { addMascota, perfil, traerMascota, traerMascotas } from '../controllers/user.controllers'
+import { addMascota, eliminarMascota, perfil, traerMascota, traerMascotas } from '../controllers/user.controllers'
 import { registerMascota } from '../schema/mascota.schema'
 import { idSchema } from '../schema/params.schema'
 

@@ -18,7 +18,11 @@ export class UserService {
   perfil(): Observable<IUsuario> {
     return this.http.get<IUsuario>(`${this.URL}`+ '/perfil');
   }
- 
+
+  eliminarMascota(id: string): Observable<IUsuario> {
+    return this.http.delete<IUsuario>(`${this.URL}/mascotas/${id}`);
+  }
+  
   traerMascotas(): Observable<IMascota[]> {
     return this.http.get<IMascota[]>(`${this.URL}`+ '/mascotas');
   }
