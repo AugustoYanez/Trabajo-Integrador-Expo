@@ -52,7 +52,7 @@ export const traerMascota = async (req: IReq, res: IRes) => {
     }
 }
 
-export const addMascota = async (req: IReq, res: IRes) => {  
+export const agregarMascota = async (req: IReq, res: IRes) => {  
     try {  
         const { placaID, nombre, apodo, estado, edad, descripcion,imagen, caracteristicas }: IMascota = req.body;
         const { _id } = (req as CustomRequest).payload as Payload;  
