@@ -18,10 +18,33 @@ export class EditarMascotaModalComponent {
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: IMascota, public dialogRef: MatDialogRef<EditarMascotaModalComponent>){
     this.mascota = {
-      ...data
+      _id: data._id,
+      placaID: data.placaID,
+      nombre: data.nombre,
+      apodo: data.apodo,
+      edad: data.edad,
+      descripcion: data.descripcion,
+      imagen: data.imagen,
+      caracteristicas: data.caracteristicas
     }
+    console.log();
+    
+  }
+  validarCampos(): string[] {
+    const errores: string[] = [];
+
+    for (const [key, value] of Object.entries(this.mascota)) {
+      if (!value) {
+        errores.push(`El campo ${key} no puede estar vacío.`);
+      }
+    }
+
+    return errores;
   }
   guardarMascota(event: Event): void {
-
+    event.preventDefault();
+    this.mensajeError = this.validarCampos().length > 0 ? this.validarCampos() : null;
+    if (!this.mensajeError) this.dialogRef.close(this.mascota);
+  
   }
 }

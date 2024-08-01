@@ -53,25 +53,23 @@ constructor(private router: Router) {
       this.mensajeExito = null;
       return;
     }
-
-  
-      this.auth.login(this.usuario).subscribe({
-        next: (res) => {
-          this.mensajeExito = res.message;
-          this.mensajeError = null;
-          localStorage.setItem('token', res.token);
-          if (res.admin) {
-            localStorage.setItem('admin', res.admin);
-          }
-          const redirectUrl = this.auth.getRedirectUrl() || '/';
-          this.auth.clearRedirectUrl();
-          this.router.navigate([redirectUrl]);
-        },
-        error: (err) => {
-          this.mensajeExito = null;
-          this.mensajeError = err.error;
+    this.auth.login(this.usuario).subscribe({
+      next: (res) => {
+        this.mensajeExito = res.message;
+        this.mensajeError = null;
+        localStorage.setItem('token', res.token);
+        if (res.admin) {
+          localStorage.setItem('admin', res.admin);
         }
-      });
+        const redirectUrl = this.auth.getRedirectUrl() || '/';
+        this.auth.clearRedirectUrl();
+        this.router.navigate([redirectUrl]);
+      },
+      error: (err) => {
+        this.mensajeExito = null;
+        this.mensajeError = err.error;
+      }
+    });
 
 }
 }

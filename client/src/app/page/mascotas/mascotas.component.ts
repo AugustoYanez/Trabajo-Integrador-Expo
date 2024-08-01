@@ -7,6 +7,7 @@ import { IMascota } from '../../interfaces/Mascota';
 import { inject } from '@angular/core';
 import { RouterOutlet, Routes, RouterModule } from '@angular/router';
 import { MascotaMiniComponent } from '../../components/mascota-mini/mascota-mini.component';
+import { DataSharedService } from '../../services/data-shared.service';
 
 @Component({
   selector: 'app-mascotas',
@@ -20,16 +21,19 @@ export class MascotasComponent {
   usuario: IUsuario | null = null;
   mascotas: IMascota[] = [];
 
-  constructor() {
+  constructor(private sharedData: DataSharedService) {
 
-   }  
+  }
 
-  ngOnInit() {  
+  ngOnInit() {
     this.user.traerMascotas().subscribe(data => {
       this.mascotas = data || [];
-    }); 
-  }  
+      this.mascotas.forEach(mascota => {
+        this.sharedData.changeData(mascota._id, mascota)
+      });
+    });
+  }
 
- 
+
 
 }

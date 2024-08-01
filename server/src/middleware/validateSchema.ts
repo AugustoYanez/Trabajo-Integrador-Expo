@@ -14,7 +14,7 @@ const validate = (schema: Schema) => (req: IReq, res: IRes, next: NextFunction) 
     if (err instanceof z.ZodError) {
       // Obtener solo los mensajes de error
       const errorMessages = err.issues.map(issue => issue.message);
-      return res.status(400).json( errorMessages);
+      return res.status(400).json(errorMessages);
     }
   }
 };

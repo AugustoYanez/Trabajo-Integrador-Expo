@@ -10,7 +10,8 @@ const user = Router()
 user.get('/perfil', authenticateToken, perfil)
 user.get('/mascotas', authenticateToken, traerMascotas)
 user.get('/mascotas/:id', authenticateToken, validate(idSchema), traerMascota)
-user.post('/mascotas', authenticateToken, agregarMascota)
+user.post('/mascotas', authenticateToken, validate(registerMascota), agregarMascota)
+user.put('/mascotas', authenticateToken, validate(registerMascota), )
 user.delete('/mascotas/:id', authenticateToken, validate(idSchema), eliminarMascota)
 
 export default user;

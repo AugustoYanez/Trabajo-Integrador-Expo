@@ -4,8 +4,8 @@ import { Documento, Contacto } from '../interfaces/enums'
 export const loginSchema = z.object({
     body: z.object({
         email: z.string({
-            required_error: "El campo nombre, es requerido.",
-        }).email({message: "emailno valido",}),
+            required_error: "El campo email, es requerido.",
+        }).email({message: "email no valido",}),
         contrasena: z.string({
             required_error:"el campo contraseña, es requerido."
         }).min(8, { message: "Tiene que tener mas de 8 caracteres." }),

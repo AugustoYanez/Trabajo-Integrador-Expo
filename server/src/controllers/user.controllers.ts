@@ -3,6 +3,7 @@ import { CustomRequest, Payload } from '../middleware/validateToken';
 import { Usuario } from '../models/auth.models';
 import { IMascota } from '../interfaces/Mascota';
 import { Mascota } from '../models/auth.models';
+import mongoose, { ObjectId } from 'mongoose';
 
 export const perfil = async (req: IReq, res: IRes) => {
     try {
@@ -91,7 +92,7 @@ export const agregarMascota = async (req: IReq, res: IRes) => {
         const mascotaGuardada = await nuevaMascota.save();  
 
         // Agregar la mascota guardada al usuario  
-        usuario.mascotas.push(mascotaGuardada._id);  
+        usuario.mascotas.push(new mongoose.Types.ObjectId(mascotaGuardada._id));  
         await usuario.save();  
 
         res.status(201).json(mascotaGuardada);  
@@ -99,6 +100,36 @@ export const agregarMascota = async (req: IReq, res: IRes) => {
         console.error(error);  
         res.status(500).json({ error: 'Error al agregar la mascota' });  
     }  
+}
+
+export const editarMascota = async (req: IReq, res: IRes) => {
+    try {
+        const {_id, placaID, nombre, apodo, estado, edad, descripcion,imagen, caracteristicas }: IMascota = req.body;
+        const user = (req as CustomRequest).payload as Payload;  
+        const usuario = await Usuario.findById({ _id: user._id }).populate('mascotas');
+
+        const mascota = await Mascota.findOneAndReplace({_id}, {
+            placaID,
+            nombre,
+            apodo,
+            estado,
+            edad,
+            descripcion,
+            imagen,
+            caracteristicas
+        });
+
+        if (!usuario) {  
+            res.status(404).json({ error: 'Usuario no encontrado' });  
+            return;  
+        }
+
+        res.status(201).json(mascota);  
+        
+    } catch (error) {
+        console.error(error);  
+        res.status(500).json({ error: 'Error al editar la mascota' });  
+    }
 }
 
 export const eliminarMascota = async (req: IReq, res: IRes) => {
