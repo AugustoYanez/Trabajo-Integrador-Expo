@@ -30,6 +30,9 @@ export class UserService {
   agregarMascota(mascota: IMascota): Observable<IMascota> {
     return this.http.post<IMascota>(`${this.URL}`+ '/mascotas', mascota);
   }
+  editarMascota(mascota: IMascota): Observable<IMascota> {
+    return this.http.put<IMascota>(`${this.URL}`+ '/mascotas', mascota)
+  }
 
 
 

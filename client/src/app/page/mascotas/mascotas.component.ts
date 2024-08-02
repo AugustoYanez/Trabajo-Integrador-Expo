@@ -31,6 +31,9 @@ export class MascotasComponent {
       this.mascotas.forEach(mascota => {
         this.sharedData.changeData(mascota._id, mascota)
       });
+      this.sharedData.getAllData().subscribe(data => {
+        this.mascotas = data;
+      })
     });
   }
 

@@ -14,15 +14,14 @@ import { DataSharedService } from '../../services/data-shared.service';
   styleUrl: './mascota-modal.component.css'
 })
 export class MascotaModalComponent {
-  userService: UserService = inject(UserService);
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any, private dialogRef: MatDialogRef<MascotaModalComponent>, private router: Router, public dialog: MatDialog, private sharedData: DataSharedService) { }
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any, private userService: UserService, private dialogRef: MatDialogRef<MascotaModalComponent>, private router: Router, public dialog: MatDialog, private sharedData: DataSharedService) { }
 
   eliminarMascota() {
     this.userService.eliminarMascota(this.data._id).subscribe(
       () => {
-        this.dialogRef.close();
-        window.location.reload();
+        this.sharedData.removeData(this.data._id)
+        this.dialogRef.close(this.data._id);
       },
       (error: HttpErrorResponse) => {
         console.error(error);
@@ -38,6 +37,7 @@ export class MascotaModalComponent {
     dialogRef.afterClosed().subscribe(result => {
       this.data = result;
       this.sharedData.changeData(result._id, result);
+      this.userService.editarMascota(result).subscribe();
     })
   }
 }

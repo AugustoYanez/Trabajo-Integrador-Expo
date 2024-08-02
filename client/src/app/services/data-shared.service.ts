@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { IMascota } from '../interfaces/Mascota';
+import { Estado } from '../interfaces/enums';
 @Injectable({
   providedIn: 'root'
 })
@@ -13,15 +14,22 @@ export class DataSharedService {
     edad: 0,
     descripcion: '',
     imagen: '',
-    caracteristicas: ''
+    caracteristicas: '',
+    estado: Estado.Adoptada
   }
-  private dataSources: { [id: string]: BehaviorSubject<IMascota> } = {};
 
-  getData(id: string) {
+  private dataSources: { [id: string]: BehaviorSubject<IMascota> } = {};
+  private mascotasList: BehaviorSubject<IMascota[]> = new BehaviorSubject<IMascota[]>([]);
+
+  getData(id: string): Observable<IMascota> {
     if (!this.dataSources[id]) {
       this.dataSources[id] = new BehaviorSubject<IMascota>(this.default);
     }
     return this.dataSources[id].asObservable();
+  }
+
+  getAllData(): Observable<IMascota[]> {
+    return this.mascotasList.asObservable();
   }
 
   changeData(id: string, data: IMascota) {
@@ -29,5 +37,18 @@ export class DataSharedService {
       this.dataSources[id] = new BehaviorSubject<IMascota>(this.default);
     }
     this.dataSources[id].next(data);
+    this.updateMascotasList();
+  }
+
+  removeData(id: string) {
+    if (this.dataSources[id]) {
+      delete this.dataSources[id];
+      this.updateMascotasList();
+    }
+  }
+
+  private updateMascotasList() {
+    const allData = Object.values(this.dataSources).map(subject => subject.getValue());
+    this.mascotasList.next(allData);
   }
 }

@@ -124,7 +124,7 @@ export const editarMascota = async (req: IReq, res: IRes) => {
             return;  
         }
 
-        res.status(201).json(mascota);  
+        res.status(204).json("mascota editada correctamente");  
         
     } catch (error) {
         console.error(error);  

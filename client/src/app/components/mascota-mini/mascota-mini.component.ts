@@ -12,20 +12,15 @@ import { BehaviorSubject } from 'rxjs';
   templateUrl: './mascota-mini.component.html',
   styleUrl: './mascota-mini.component.css'
 })
-export class MascotaMiniComponent implements OnInit {
+export class MascotaMiniComponent {
   @Input() mascota!: IMascota;
 
-  constructor(public dialog: MatDialog, private sharedData: DataSharedService) {
-  }
-  ngOnInit(): void {
-    this.sharedData.getData(this.mascota._id).subscribe((data) => {
-      this.mascota = {...this.mascota,...data };
-    });
+  constructor(public dialog: MatDialog) {
   }
 
   openDetails() {
-    const dialogRef = this.dialog.open(MascotaModalComponent, {
+    this.dialog.open(MascotaModalComponent, {
       data: this.mascota
     });
-}
+  }
 }

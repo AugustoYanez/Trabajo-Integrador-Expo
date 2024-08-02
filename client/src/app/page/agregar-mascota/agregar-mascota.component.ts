@@ -108,11 +108,9 @@ export class AgregarMascotaComponent {
               ...this.mascotaForm.value,
               imagen: this.urlImagen || ""  // Agregar la url de la imagen al objeto mascota si hay imagen subida
             };
-            console.log('Nueva mascota:', nuevaMascota);
             this.userService.agregarMascota(nuevaMascota).subscribe({
               next: (respuesta) => {
-                console.log('Mascota agregada:', respuesta);
-                this.router.navigate(['/mascotas']); // Redireccionar al enviar
+                this.router.navigate(['/mascotas']);
               },
               error: (error) => {
                 console.error('Error al agregar mascota:', error);
