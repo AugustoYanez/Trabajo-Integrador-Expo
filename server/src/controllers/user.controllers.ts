@@ -164,3 +164,29 @@ export const eliminarMascota = async (req: IReq, res: IRes) => {
         res.status(500).json({ error: 'Error al eliminar la mascota' });
     }
 };
+
+
+export const eliminarUsuario = async (req: IReq, res: IRes) => {
+    try {
+        const { _id } = (req as CustomRequest).payload as Payload;
+
+        // Encontrar al usuario
+        const usuario = await Usuario.findById(_id).populate('mascotas');
+        if (!usuario) {
+            res.status(404).json({ error: 'Usuario no encontrado' });
+            return;
+        }
+
+        // Eliminar todas las mascotas asociadas al usuario
+        const mascotasIds = usuario.mascotas.map((mascotaId: any) => mascotaId.toString());
+        await Mascota.deleteMany({ _id: { $in: mascotasIds } });
+
+        // Eliminar la cuenta del usuario
+        await Usuario.findByIdAndDelete(_id);
+
+        res.status(200).json({ message: 'Usuario y sus mascotas eliminadas correctamente' });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Error al eliminar el usuario' });
+    }
+};

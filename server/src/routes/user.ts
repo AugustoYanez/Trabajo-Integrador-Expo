@@ -4,10 +4,11 @@ import validate from '../middleware/validateSchema'
 import { agregarMascota, eliminarMascota, perfil, traerMascota, traerMascotas, editarMascota } from '../controllers/user.controllers'
 import { registerMascota } from '../schema/mascota.schema'
 import { idSchema } from '../schema/params.schema'
-
+import { eliminarUsuario } from '../controllers/user.controllers'
 const user = Router()
 
 user.get('/perfil', authenticateToken, perfil)
+user.delete('/perfil', authenticateToken, eliminarUsuario)
 user.get('/mascotas', authenticateToken, traerMascotas)
 user.get('/mascotas/:id', authenticateToken, validate(idSchema), traerMascota)
 user.post('/mascotas', authenticateToken, validate(registerMascota), agregarMascota)
